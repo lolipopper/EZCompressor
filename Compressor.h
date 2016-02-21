@@ -6,7 +6,7 @@ using namespace std;
 
 class Compressor {
 public:
-	static void Compress(string,string);
+	static void Compress(string outputName,vector< pair<string,string> > fileName);
 
 private:
 	Compressor();

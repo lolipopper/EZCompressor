@@ -33,7 +33,7 @@ public:
 		}
 		return false;
 	}
-	bool readNextByte(char* c) {
+	bool readNextByte(int* c) {
 		*c = 0;
 		bool finish = false;
 		for (int i = 7; i >= 0; i--) {

@@ -1,25 +1,31 @@
 #ifndef HUFFMANTREE_H
 #define HUFFMANTREE_H
 #include <bits/stdc++.h>
-#define NYT (1<<8)
 #include "Tree.h"
+#include "Reader.h"
+#include "Writer.h"
+#define NYT (1<<8)
+#define EndOfFile (1<<8)+1
+#define EndOfTransmission (1<<8)+2
 using namespace std;
 
 class HuffmanTree {
 public:
 	HuffmanTree();
 
+	Tree* getRoot();
 	Tree* getLeaf(int value);
 
 	void updateTree(Tree* node);
 	void updateBlockFirst();
 	void splitNYT(Tree* node,int value);
-	void writeCode(Tree* node);
+	void writeCode(Tree* node,Writer& w);
+	int readCode(Tree* node);
 	void writeTree();
 
 private:
 	Tree* root;
-	Tree* blockFirst[];
+	map<int,Tree*> blockFirst;
 	Tree* leaves[1000];
 };
 
