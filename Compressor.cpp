@@ -14,11 +14,10 @@ void addCharacter(HuffmanTree& T,int c,Writer& w)
 	//cout << (T.getRoot())->getWeight() << endl;
 }
 
-void Compressor::Compress(string outputName,vector< pair<string,string> > fileName)
+void Compressor::Compress(Writer& w,vector< pair<string,string> > fileName)
 {
 	HuffmanTree T;
 	int numberOfFiles=fileName.size();
-	Writer w(outputName);
 	for (int i=0;i<numberOfFiles;i++)
 	{
 		Reader r(fileName[i].first);
