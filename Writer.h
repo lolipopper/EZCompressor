@@ -56,6 +56,13 @@ public:
 		return false;
 	}
 
+	void flush() {
+		fwrite (&currentByte, 1, 1, output);
+		newChar = true;		
+		remainingBitCount = 7;
+		currentByte = 0;
+	}
+
 	~Writer() {
 		fclose(output);
 	}
