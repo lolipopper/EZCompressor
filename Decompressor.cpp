@@ -9,14 +9,17 @@ void Decompressor::Decompress(string outputName,vector< pair<string,string> > fi
 	{
 		do
 		{
-			node=T.readCode();
-			if (T.getLeaf(c)==T.getLeaf(NYT))
+			Tree* node=T.readCode();
+			int c=node->getValue();
+			if (node->getValue()==NYT)
 			{
+				c=read9Bit();
 				T.splitNYT(T.getLeaf(NYT),c);
 			}
+			//if (EOF)
+			write(c);
 			T.updateBlockFirst();
 			T.updateTree(T.getLeaf(c));
-			myfile.close();
 		}
 		while (c!='0');
 		T.writeTree();

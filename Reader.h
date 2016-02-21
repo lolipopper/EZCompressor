@@ -1,5 +1,5 @@
-#ifndef matriks_h
-#define matriks_h
+#ifndef READER_H
+#define READER_H
 #include "string"
 #include "iostream"
 #include "fstream"

@@ -19,7 +19,6 @@ void Compressor::Compress(string outputName,vector< pair<string,string> > fileNa
 			}
 			T.updateBlockFirst();
 			T.updateTree(T.getLeaf(c));
-			myfile.close();
 		}
 		while (c!='0');
 		T.writeTree();
