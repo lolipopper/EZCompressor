@@ -11,18 +11,17 @@ void addCharacter(HuffmanTree& T,int* c,Reader& r)
 	T.updateTree(T.getLeaf(*c));
 }
 
-void Decompressor::Decompress(string outputName,pair<string,string> fileName)
+void Decompressor::Decompress(string outputName,string fileName)
 {
 	HuffmanTree T;
 	int numberOfFiles=fileName.size();
+	int c;
+	Reader r(fileName);
 	while (c!=EndOfTransmission)
 	{
 		string outputFileName;
-		Reader r(fileName[i].first);
-		Writer w(outputName);
-		int c;
 
-		while (c!=EndOfFile) //encode filename
+		do //encode filename
 		{
 			bool b;
 			Tree* node=T.getRoot();
@@ -39,28 +38,37 @@ void Decompressor::Decompress(string outputName,pair<string,string> fileName)
 				}
 			}
 			c=node->getValue();
-			addCharacter(&c);
-			outputFileName.push_back(c);
+			addCharacter(T,&c,r);
+			if ((c!=EndOfFile)&&(c!=EndOfTransmission))
+				outputFileName.push_back(c);
 		}
-		
-		while (c!=EndOfFile) //encode filename
+		while ((c!=EndOfFile)&&(c!=EndOfTransmission));
+
+		if (c!=EndOfTransmission)
 		{
-			bool b;
-			Tree* node=T.getRoot();
-			while (node->getLeft()!=NULL)
+			Writer w(outputName+outputFileName);
+			do //encode filename
 			{
-				r.readNextBit(&b);
-				if (b)
+				bool b;
+				Tree* node=T.getRoot();
+				while (node->getLeft()!=NULL)
 				{
-					node=node->getRight();
+					r.readNextBit(&b);
+					if (b)
+					{
+						node=node->getRight();
+					}
+					else
+					{
+						node=node->getLeft();
+					}
 				}
-				else
-				{
-					node=node->getLeft();
-				}
+				c=node->getValue();
+				addCharacter(T,&c,r);
+				w.writeByte(c);
 			}
-			c=node->getValue();
-			addCharacter(&c);
+			while ((c!=EndOfFile)&&(c!=EndOfTransmission));
+			w.flush();
 		}
 	}
 }

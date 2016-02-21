@@ -33,7 +33,7 @@ public:
 		// else
 		// 	fseek(output, -1, SEEK_CUR);
 	}
-	void writeByte(char c) {
+	void writeByte(int c) {
 		bool finish = false;
 		for (int i = 7; i >= 0; i--) {
 			writeBit((c >> i) & 1);

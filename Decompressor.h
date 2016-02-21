@@ -1,5 +1,5 @@
-#ifndef COMPRESSOR_H
-#define COMPRESSOR_H
+#ifndef DECOMPRESSOR_H
+#define DECOMPRESSOR_H
 #include <bits/stdc++.h>
 #include "HuffmanTree.h"
 using namespace std;

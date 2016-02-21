@@ -11,7 +11,7 @@ void addCharacter(HuffmanTree& T,int c,Writer& w)
 	}
 	T.updateBlockFirst();
 	T.updateTree(T.getLeaf(c));
-	cout << (T.getRoot())->getWeight() << endl;
+	//cout << (T.getRoot())->getWeight() << endl;
 }
 
 void Compressor::Compress(string outputName,vector< pair<string,string> > fileName)
@@ -54,4 +54,5 @@ void Compressor::Compress(string outputName,vector< pair<string,string> > fileNa
 	// cout << endl;
 	// T.writeTree();
 	// cout << endl;
+	w.flush();
 }

@@ -6,7 +6,7 @@
 #include "Writer.h"
 #define NYT (1<<8)
 #define EndOfFile (1<<8)+1
-#define EndOfTransmission (1<<8)+2
+#define EndOfTransmission (1<<8)+3
 using namespace std;
 
 class HuffmanTree {
@@ -20,7 +20,6 @@ public:
 	void updateBlockFirst();
 	void splitNYT(Tree* node,int value);
 	void writeCode(Tree* node,Writer& w);
-	int readCode(Tree* node);
 	void writeTree();
 
 private:
