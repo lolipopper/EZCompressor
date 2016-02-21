@@ -9,7 +9,7 @@ public:
 	static void Decompress(string,string);
 
 private:
-	Compressor();
+	Decompressor();
 };
 
 #endif

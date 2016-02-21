@@ -1,32 +1,66 @@
 #include "Decompressor.h"
 
-void Decompressor::Decompress(string outputName,vector< pair<string,string> > fileName)
+void addCharacter(int* c,Reader& r)
+{
+	if (*c==NYT)
+	{
+		r.readNextNine(c);
+		T.splitNYT(T.getLeaf(NYT),*c);
+	}
+	T.updateBlockFirst();
+	T.updateTree(T.getLeaf(*c));
+}
+
+void Decompressor::Decompress(string outputName,pair<string,string> fileName)
 {
 	HuffmanTree T;
-	ofstream outfile(outputName,ios::binary);
-	ifstream infile(fileName,ios::binary);
-	if (myfile.is_open())
+	int numberOfFiles=fileName.size();
+	while (c!=EndOfTransmission)
 	{
-		do
+		string outputFileName;
+		Reader r(fileName[i].first);
+		Writer w(outputName);
+		int c;
+
+		while (c!=EndOfFile) //encode filename
 		{
-			Tree* node=T.readCode();
-			int c=node->getValue();
-			if (node->getValue()==NYT)
+			bool b;
+			Tree* node=T.getRoot();
+			while (node->getLeft()!=NULL)
 			{
-				c=read9Bit();
-				T.splitNYT(T.getLeaf(NYT),c);
+				r.readNextBit(&b);
+				if (b)
+				{
+					node=node->getRight();
+				}
+				else
+				{
+					node=node->getLeft();
+				}
 			}
-			//if (EOF)
-			write(c);
-			T.updateBlockFirst();
-			T.updateTree(T.getLeaf(c));
+			c=node->getValue();
+			addCharacter(&c);
+			outputFileName.push_back(c);
 		}
-		while (c!='0');
-		T.writeTree();
-		cout<<endl;
-	}
-	else
-	{
-		cout << "unable to open file";
+
+		while (c!=EndOfFile) //encode filename
+		{
+			bool b;
+			Tree* node=T.getRoot();
+			while (node->getLeft()!=NULL)
+			{
+				r.readNextBit(&b);
+				if (b)
+				{
+					node=node->getRight();
+				}
+				else
+				{
+					node=node->getLeft();
+				}
+			}
+			c=node->getValue();
+			addCharacter(&c);
+		}
 	}
 }

@@ -9,6 +9,16 @@ HuffmanTree::HuffmanTree()
 	}
 }
 
+Tree* HuffmanTree::getRoot()
+{
+	return root;
+}
+
+Tree* HuffmanTree::getLeaf(int value)
+{
+	return leaves[value];
+}
+
 void HuffmanTree::updateTree(Tree* node)
 {
 	if (node->getParent()!=NULL)
@@ -87,14 +97,8 @@ void HuffmanTree::updateBlockFirst()
 	}
 }
 
-Tree* HuffmanTree::getLeaf(int value)
-{
-	return leaves[value];
-}
-
 void HuffmanTree::splitNYT(Tree* node,int value)
 {
-	myfile << value;
 	leaves[value]=new Tree(value,0,NULL,NULL,node);
 	Tree* newParent=new Tree(512,0,node,leaves[value],node->getParent());
 	if (node!=root)
@@ -114,18 +118,18 @@ void HuffmanTree::splitNYT(Tree* node,int value)
 	//cout << endl;
 }
 
-void HuffmanTree::writeCode(Tree* node)
+void HuffmanTree::writeCode(Tree* node,Writer& w)
 {
 	if (node!=root)
 	{
-		writeCode(node->getParent());
+		writeCode(node->getParent(),w);
 		if (node->isLeftChild()) //coutnya gimana?
 		{
-			cout << 0;
+			w.writeBit(0);
 		}
 		else
 		{
-			cout << 1;
+			w.writeBit(1);
 		}
 	}
 }
