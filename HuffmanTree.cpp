@@ -76,6 +76,7 @@ void HuffmanTree::updateTree(Tree* node)
 
 void HuffmanTree::updateBlockFirst()
 {
+	blockFirst.clear();
 	queue<Tree*> q; //Algoritma BFS
 	int curWeight=root->getWeight()+1;
 	q.push(root);
@@ -123,12 +124,14 @@ void HuffmanTree::writeCode(Tree* node,Writer& w)
 	if (node!=root)
 	{
 		writeCode(node->getParent(),w);
-		if (node->isLeftChild()) //coutnya gimana?
+		if (node->isLeftChild())
 		{
+			//cout << 0;
 			w.writeBit(0);
 		}
 		else
 		{
+			//cout << 1;
 			w.writeBit(1);
 		}
 	}

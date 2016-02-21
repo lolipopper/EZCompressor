@@ -1,6 +1,6 @@
 #include "Decompressor.h"
 
-void addCharacter(int* c,Reader& r)
+void addCharacter(HuffmanTree& T,int* c,Reader& r)
 {
 	if (*c==NYT)
 	{
@@ -42,7 +42,7 @@ void Decompressor::Decompress(string outputName,pair<string,string> fileName)
 			addCharacter(&c);
 			outputFileName.push_back(c);
 		}
-
+		
 		while (c!=EndOfFile) //encode filename
 		{
 			bool b;

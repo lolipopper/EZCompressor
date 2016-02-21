@@ -25,7 +25,7 @@ public:
 
 private:
 	Tree* root;
-	Tree* blockFirst[100000];
+	map<int,Tree*> blockFirst;
 	Tree* leaves[1000];
 };
 
