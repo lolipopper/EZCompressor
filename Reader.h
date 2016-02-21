@@ -12,6 +12,7 @@ class Reader
 public:
 	Reader(string filename){
 		input = fopen(filename.c_str(), "rb");
+		setvbuf ( input , NULL , _IOFBF , 1024 * 1024 * 256);
 		remainingBitCount = 0;
 		newChar = false;
 	}

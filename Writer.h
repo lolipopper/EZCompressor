@@ -12,6 +12,7 @@ class Writer
 public:
 	Writer(string filename){
 		output = fopen(filename.c_str(), "wb");
+		setvbuf ( output , NULL , _IOFBF , 1024 * 1024 * 256);
 		remainingBitCount = 7;
 		newChar = false;
 		currentByte = 0;
@@ -20,16 +21,17 @@ public:
 		char c = b;
 		c <<= remainingBitCount;
 		currentByte += c;
-		fwrite (&currentByte, 1, 1, output);
+		
 		remainingBitCount--;
 		if (remainingBitCount < 0)
 		{
+			fwrite (&currentByte, 1, 1, output);
 			newChar = true;		
 			remainingBitCount = 7;
 			currentByte = 0;
 		}
-		else
-			fseek(output, -1, SEEK_CUR);
+		// else
+		// 	fseek(output, -1, SEEK_CUR);
 	}
 	void writeByte(char c) {
 		bool finish = false;
