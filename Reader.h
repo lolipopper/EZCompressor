@@ -3,6 +3,7 @@
 #include "string"
 #include "iostream"
 #include "fstream"
+#include "cstdio"
 
 using namespace std;
 
@@ -10,7 +11,7 @@ class Reader
 {
 public:
 	Reader(string filename){
-		input.open(filename.c_str(), ios::binary | ios::in);
+		input = fopen(filename.c_str(), "rb");
 		remainingBitCount = 0;
 		newChar = false;
 	}
@@ -21,7 +22,7 @@ public:
 			*b = ((currentByte >> remainingBitCount) & 1);
 			return true;
 		}
-		if (input.get(currentByte))
+		if (fread(&currentByte, 1, 1, input))
 		{
 			newChar = true;
 			remainingBitCount = 8;
@@ -71,11 +72,11 @@ public:
 	}
 
 	~Reader() {
-		input.close();
+		fclose(input);
 	}
 	
 private:
-	ifstream input;
+	FILE * input;
 	char remainingBitCount;
 	char currentByte;
 	bool newChar;
