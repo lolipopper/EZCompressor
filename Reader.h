@@ -12,6 +12,7 @@ public:
 	Reader(string filename){
 		input.open(filename.c_str(), ios::binary | ios::in);
 		remainingBitCount = 0;
+		newChar = false;
 	}
 	bool readNextBit(bool* b) {
 		if (remainingBitCount)
@@ -20,18 +21,15 @@ public:
 			*b = ((currentByte >> remainingBitCount) & 1);
 			return true;
 		}
-		else
+		if (input.get(currentByte))
 		{
-			if (input.get(currentByte))
-			{
-				remainingBitCount = 8;
-				remainingBitCount--;
-				*b = ((currentByte >> remainingBitCount) & 1);
-				return true;
-			}
-			else
-				return false;
+			newChar = true;
+			remainingBitCount = 8;
+			remainingBitCount--;
+			*b = ((currentByte >> remainingBitCount) & 1);
+			return true;
 		}
+		return false;
 	}
 	bool readNextByte(char* c) {
 		*c = 0;
@@ -63,6 +61,14 @@ public:
 		return !finish;
 	}
 
+	bool getNewChar() {
+		if (newChar)
+		{
+			newChar = false;
+			return true;
+		}
+		return false;
+	}
 
 	~Reader() {
 		input.close();
@@ -72,6 +78,7 @@ private:
 	ifstream input;
 	char remainingBitCount;
 	char currentByte;
+	bool newChar;
 };
 
 #endif
